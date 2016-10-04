@@ -1,10 +1,10 @@
 <template>
-  <img :src='image[0].url' />
+  <img :src='image[0].url' :alt='name'/>
 </template>
 
 <script>
 export default {
-  props: ['image'],
+  props: ['image', 'name'],
 };
 </script>
 

@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div id="artist">
     <h1>{{ artist.name }}</h1>
-    <artist-image :image='artist.images'></artist-image>
+    <artist-image :image='artist.images' :name='artist.name'></artist-image>
   </div>
 </template>
 
@@ -14,4 +14,7 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  color: #41b883;
+}
 </style>

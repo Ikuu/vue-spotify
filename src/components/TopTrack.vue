@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="top-track">
     <h2>{{ track.name }}</h2>
     <img :src="track.album.images[0].url" :alt="track.album.name" @click="onClick(track.id)"/>
     <audio :id="track.id">
@@ -16,9 +16,13 @@ export default {
       const player = document.getElementById(id);
       const currentState = player.paused;
       currentState ? player.play() : player.pause();
-    }
-  }
-}
+    },
+  },
+  updated() {
+    const player = document.getElementById(this.track.id);
+    player.src = this.track.preview_url;
+  },
+};
 </script>
 
 <style scoped>

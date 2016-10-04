@@ -4,7 +4,7 @@ module.exports = {
   parserOptions: {
     sourceType: 'module'
   },
-  // extends: 'airbnb-base',
+  extends: 'airbnb-base',
   // required to lint *.vue files
   plugins: [
     'html'
@@ -12,6 +12,7 @@ module.exports = {
   // add your custom rules here
   'rules': {
     'import/no-unresolved': 0,
+    'no-unused-expressions': ["error", { "allowTernary": true }],
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
   }

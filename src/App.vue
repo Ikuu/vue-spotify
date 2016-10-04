@@ -1,37 +1,59 @@
 <template>
   <div id="app">
-    <img class="logo" src="./assets/logo.png" alt="Vue.js">
+    <nav-bar></nav-bar>
     <artist :artist='artistData'></artist>
 
-    <div v-for="track in topTracksData">
-      <top-track :track="track"></top-track>
+    <div id="top-tracks">
+      <top-track v-for="track in topTracksData" :track="track"></top-track>
     </div>
   </div>
 </template>
 
 <script>
+import NavBar from './components/NavBar';
 import Artist from './components/Artist';
 import TopTrack from './components/TopTrack';
-import artistData from './data/artist';
-import topTracksData from './data/topTracks';
 
 export default {
   components: {
+    NavBar,
     Artist,
-    TopTrack
+    TopTrack,
   },
   data() {
     return {
-      artistData,
-      topTracksData,
+      artistData: {
+        name: 'Placeholder',
+        images: [{
+          url: 'http://placehold.it/200x200',
+        }],
+      },
+      topTracksData: null,
     };
+  },
+  methods: {
+    fetchData() {
+      const self = this;
+      fetch('https://api.spotify.com/v1/search?q=between&type=artist&limit=5')
+        .then(response => response.json())
+        .then(json => (self.artistData = json.artists.items[0]))
+        .then((data) => {
+          fetch(`https://api.spotify.com/v1/artists/${data.id}/top-tracks?country=GB`)
+            .then(response => response.json())
+            .then(json => (self.topTracksData = json.tracks));
+        });
+    },
+  },
+  created() {
+    this.fetchData();
   },
 };
 </script>
 
-<style scoped>
-.logo {
-  width: 100px;
-  height: 100px
+<style>
+html, body {
+  padding: 0;
+  margin: 0;
+  font-family: Source Sans Pro, Helvetica, sans-serif;
 }
 </style>

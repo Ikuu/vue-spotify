@@ -34,11 +34,14 @@ export default {
   methods: {
     fetchData() {
       const self = this;
-      fetch('https://api.spotify.com/v1/search?q=between&type=artist&limit=5')
+      const spotifyUrl = 'https://api.spotify.com/v1';
+      const artist = this.$route.params.artist || 'Drake';
+
+      fetch(`${spotifyUrl}/search?q=${artist}&type=artist&limit=5`)
         .then(response => response.json())
         .then(json => (self.artistData = json.artists.items[0]))
-        .then((data) => {
-          fetch(`https://api.spotify.com/v1/artists/${data.id}/top-tracks?country=GB`)
+        .then(data => {
+          fetch(`${spotifyUrl}/artists/${data.id}/top-tracks?country=GB`)
             .then(response => response.json())
             .then(json => (self.topTracksData = json.tracks));
         });
@@ -46,6 +49,9 @@ export default {
   },
   created() {
     this.fetchData();
+  },
+  watch: {
+    $route: 'fetchData',
   },
 };
 </script>

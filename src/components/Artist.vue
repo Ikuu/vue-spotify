@@ -7,6 +7,7 @@
 
 <script>
 import ArtistImage from './ArtistImage';
+
 export default {
   props: ['artist'],
   components: { ArtistImage },
